@@ -338,11 +338,6 @@ class Peripheral:
         self.services[uuid] = svc
         return svc
 
-    def _getIncludedServices(self, startHnd=1, endHnd=0xFFFF):
-        # TODO: No working example of this yet
-        self._writeCmd("incl %X %X\n" % (startHnd, endHnd))
-        return self._getResp('find')
-
     def getCharacteristics(self, startHnd=1, endHnd=0xFFFF, uuid=None):
         cmd = 'char %X %X' % (startHnd, endHnd)
         if uuid:
@@ -365,11 +360,6 @@ class Peripheral:
         self._writeCmd("rd %X\n" % handle)
         resp = self._getResp('rd')
         return resp['d'][0]
-
-    def _readCharacteristicByUUID(self, uuid, startHnd, endHnd):
-        # Not used at present
-        self._writeCmd("rdu %s %X %X\n" % (UUID(uuid), startHnd, endHnd))
-        return self._getResp('rd')
 
     def writeCharacteristic(self, handle, val, withResponse=False):
         cmd = "wrr" if withResponse else "wr"

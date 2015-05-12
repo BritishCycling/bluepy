@@ -198,7 +198,8 @@ class Peripheral:
             self._helper = subprocess.Popen([helperExe],
                                             stdin=subprocess.PIPE,
                                             stdout=subprocess.PIPE,
-                                            universal_newlines=True)
+                                            universal_newlines=True,
+                                            bufsize=1)
             self._poller = select.poll()
             self._poller.register(self._helper.stdout, select.POLLIN)
 
